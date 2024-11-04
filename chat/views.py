@@ -31,6 +31,12 @@ def chat_room(request, room_name):
             'last_message': last_message
         })
 
+    # Sort user_last_messages by the timestamp of the last_message in descending order
+    user_last_messages.sort(
+        key=lambda x: x['last_message'].timestamp if x['last_message'] else None,
+        reverse=True
+    )
+
     return render(request, 'chat.html', {
         'room_name': room_name,
         'chats': chats,
